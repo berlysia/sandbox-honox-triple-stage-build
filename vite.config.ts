@@ -3,8 +3,6 @@ import ssg from "@hono/vite-ssg";
 import honox from "honox/vite";
 import client from "honox/vite/client";
 import { defineConfig } from "vite";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
 
 const entry = "app/server.ts";
 
@@ -16,7 +14,7 @@ export default defineConfig(({ mode }) => {
     return {
       plugins: [client()],
       build: {
-        emptyOutDir: true,
+        outDir: ".hono",
       },
     };
   }
@@ -31,40 +29,7 @@ export default defineConfig(({ mode }) => {
   {
     // SSG build
     return {
-      plugins: [
-        honox(),
-        ssg({ entry }),
-        {
-          name: "hono/vite-ssg/tweaks",
-          config() {
-            return {
-              build: {
-                emptyOutDir: false,
-                assetsDir: "static",
-                rollupOptions: {
-                  output: {
-                    assetFileNames: "static/[name].[ext]",
-                    chunkFileNames: "static/[name].js",
-                  },
-                },
-              },
-            };
-          },
-        },
-      ],
-      resolve: {
-        alias: [
-          { find: /#/, replacement: "/app/" },
-          {
-            find: /^\/static\/(.*?)\.js/,
-            replacement: resolve(
-              // Node 18 support
-              dirname(fileURLToPath(import.meta.url)),
-              "dist/static/$1.js",
-            ),
-          },
-        ],
-      },
+      plugins: [honox(), ssg({ entry })],
     };
   }
 });
