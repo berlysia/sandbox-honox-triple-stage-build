@@ -30,7 +30,7 @@ export default function ApiViewer() {
       >
         send
       </button>
-      <textarea value={state === "success" ? value : state} readOnly />
+      <textarea readOnly>{state === "success" ? value : state}</textarea>
     </div>
   );
 }
