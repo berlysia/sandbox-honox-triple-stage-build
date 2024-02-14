@@ -5,7 +5,8 @@
     "dev": "vite",
     "build": "vite build --mode client && vite build && vite build --mode worker",
     "preview": "wrangler pages dev ./dist",
-    "deploy": "$npm_execpath run build && wrangler pages deploy ./dist"
+    "deploy": "$npm_execpath run build && wrangler pages deploy ./dist",
+    "postinstall": "bunx patcheer apply"
   },
   "private": true,
   "dependencies": {
@@ -16,6 +17,7 @@
     "@cloudflare/workers-types": "^4.20240208.0",
     "@hono/vite-cloudflare-pages": "^0.2.4",
     "@hono/vite-ssg": "^0.0.1",
+    "patcheer": "^1.0.5",
     "prettier": "^3.2.5",
     "vite": "^5.0.12",
     "wrangler": "^3.27.0"
